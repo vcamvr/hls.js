@@ -7,9 +7,12 @@ const importHelper = require('@babel/helper-module-imports');
 /* Allow to customise builds through env-vars */
 const env = process.env;
 
-const addSubtitleSupport = !!env.SUBTITLE || !!env.USE_SUBTITLES;
+// const addSubtitleSupport = !!env.SUBTITLE || !!env.USE_SUBTITLES;
+// const addEMESupport = !!env.EME_DRM || !!env.USE_EME_DRM;
+
 const addAltAudioSupport = !!env.ALT_AUDIO || !!env.USE_ALT_AUDIO;
-const addEMESupport = !!env.EME_DRM || !!env.USE_EME_DRM;
+const addEMESupport = false;
+const addSubtitleSupport = false;
 
 const createDefinePlugin = (type) => {
   const buildConstants = {
@@ -155,6 +158,9 @@ const multiConfig = [
       libraryTarget: 'umd',
       libraryExport: 'default',
       globalObject: 'this'
+    },
+    resolve: {
+      alias: getAliasesForLightDist()
     },
     plugins: mainPlugins,
     devtool: 'source-map'
