@@ -52,12 +52,12 @@ class XhrLoader {
     try {
       if (xhrSetup) {
         try {
-          xhrSetup(xhr, context.url);
+          xhrSetup(xhr, context.url, context);
         } catch (e) {
           // fix xhrSetup: (xhr, url) => {xhr.setRequestHeader("Content-Language", "test");}
           // not working, as xhr.setRequestHeader expects xhr.readyState === OPEN
           xhr.open('GET', context.url, true);
-          xhrSetup(xhr, context.url);
+          xhrSetup(xhr, context.url, context);
         }
       }
       if (!xhr.readyState) {
