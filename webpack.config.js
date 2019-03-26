@@ -9,17 +9,18 @@ const env = process.env;
 
 // const addSubtitleSupport = !!env.SUBTITLE || !!env.USE_SUBTITLES;
 // const addEMESupport = !!env.EME_DRM || !!env.USE_EME_DRM;
+// const addAltAudioSupport = !!env.ALT_AUDIO || !!env.USE_ALT_AUDIO;
 
-const addAltAudioSupport = !!env.ALT_AUDIO || !!env.USE_ALT_AUDIO;
+const addAltAudioSupport = true;
 const addEMESupport = false;
 const addSubtitleSupport = false;
 
 const createDefinePlugin = (type) => {
   const buildConstants = {
     __VERSION__: JSON.stringify(pkgJson.version),
-    __USE_SUBTITLES__: JSON.stringify(type === 'main' || addSubtitleSupport),
-    __USE_ALT_AUDIO__: JSON.stringify(type === 'main' || addAltAudioSupport),
-    __USE_EME_DRM__: JSON.stringify(type === 'main' || addEMESupport)
+    __USE_SUBTITLES__: JSON.stringify(addSubtitleSupport),
+    __USE_ALT_AUDIO__: JSON.stringify(true),
+    __USE_EME_DRM__: JSON.stringify(addEMESupport)
   };
   return new webpack.DefinePlugin(buildConstants);
 };
@@ -117,7 +118,7 @@ function getAliasesForLightDist () {
       './controller/subtitle-stream-controller': './empty.js'
     });
   }
-
+  console.log('addAltAudioSupport', addAltAudioSupport);
   if (!addAltAudioSupport) {
     aliases = Object.assign(aliases, {
       './controller/audio-track-controller': './empty.js',
